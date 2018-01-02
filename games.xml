@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gamesList>
+	<game>
+		<name>Horizon Zero Dawn</name>
+		<releaseDate>
+			<year>2017</year>
+			<month>3</month>
+			<day>1</day>
+		</releaseDate>
+		<developer>Guerrilla Games</developer>
+		<ign>9.3</ign>
+		<sales>3400000</sales>
+		<genre>Adventure</genre>
+		<platform>PS4</platform>
+		<img>./imgs/3.jpg</img>
+	</game>
+
+	<game>
+		<name>Uncharted 4: A Thief's End</name>
+		<releaseDate>
+			<year>2016</year>
+			<month>5</month>
+			<day>10</day>
+		</releaseDate>
+		<developer>Naughty Dog</developer>
+		<ign>9.0</ign>
+		<sales>9610000</sales>
+		<genre>Adventure</genre>
+		<platform>PS4</platform>
+		<img>./imgs/1.jpg</img>
+	</game>
+
+
+	<game>
+		<name>Bloodborne</name>
+		<releaseDate>
+			<year>2015</year>
+			<month>3</month>
+			<day>24</day>
+		</releaseDate>
+		<developer>FromSoftware</developer>
+		<ign>9.1</ign>
+		<sales>2900000</sales>
+		<genre>Action</genre>
+		<platform>PS4</platform>
+		<img>./imgs/5.jpg</img>
+	</game>
+
+	<game>
+		<name>Gran Turismo Sport</name>
+		<releaseDate>
+			<year>2017</year>
+			<month>10</month>
+			<day>17</day>
+		</releaseDate>
+		<developer>Polyphony Digital</developer>
+		<ign>7.5</ign>
+		<sales>1340000</sales>
+		<genre>Racing</genre>
+		<platform>PS4</platform>
+		<img>./imgs/7.jpg</img>
+	</game>
+
+
+	<game>
+		<name>Persona 5</name>
+		<releaseDate>
+			<year>2016</year>
+			<month>9</month>
+			<day>15</day>
+		</releaseDate>
+		<developer>Atlus</developer>
+		<ign>9.7</ign>
+		<sales>1120000</sales>
+		<genre>role playing</genre>
+		<platform>PS4</platform>
+		<img>./imgs/9.jpg</img>
+	</game>
+
+
+	<game>
+		<name>The Last of Us</name>
+		<releaseDate>
+			<year>2013</year>
+			<month>6</month>
+			<day>14</day>
+		</releaseDate>
+		<developer>Naughty Dog</developer>
+		<ign>10</ign>
+		<sales>5860000</sales>
+		<genre>Action</genre>
+		<platform>PS4</platform>
+		<img>./imgs/2.jpg</img>
+	</game>
+
+	<game>
+		<name>The Legend of Zelda: Breath of the Wild</name>
+		<releaseDate>
+			<year>2017</year>
+			<month>3</month>
+			<day>3</day>
+		</releaseDate>
+		<developer>Nintendo EPD</developer>
+		<ign>10</ign>
+		<sales>4360000</sales>
+		<genre>Adventure</genre>
+		<platform>Nintendo Switch</platform>
+		<img>./imgs/6.jpg</img>
+	</game>
+
+
+	<game>
+		<name>Super Mario Odyssey</name>
+		<releaseDate>
+			<year>2017</year>
+			<month>10</month>
+			<day>27</day>
+		</releaseDate>
+		<developer>Nintendo EPD</developer>
+		<ign>10</ign>
+		<sales>2830000</sales>
+		<genre>Adventure</genre>
+		<platform>Nintendo Switch</platform>
+		<img>./imgs/11.jpg</img>
+	</game>
+
+
+	<game>
+		<name>Arms</name>
+		<releaseDate>
+			<year>2017</year>
+			<month>6</month>
+			<day>16</day>
+		</releaseDate>
+		<developer>Nintendo EPD</developer>
+		<ign>8.0</ign>
+		<sales>1090000</sales>
+		<genre>Fighting</genre>
+		<platform>Nintendo Switch</platform>
+		<img>./imgs/4.jpg</img>
+	</game>
+
+
+	<game>
+		<name>Mario Kart 8 Deluxe</name>
+		<releaseDate>
+			<year>2017</year>
+			<month>4</month>
+			<day>28</day>
+		</releaseDate>
+		<developer>Nintendo EAD</developer>
+		<ign>9.3</ign>
+		<sales>3790000</sales>
+		<genre>Racing</genre>
+		<platform>Nintendo Switch</platform>
+		<img>./imgs/8.jpg</img>
+	</game>
+
+
+	<game>
+		<name>Splatoon 2</name>
+		<releaseDate>
+			<year>2017</year>
+			<month>7</month>
+			<day>21</day>
+		</releaseDate>
+		<developer>Nintendo EPD</developer>
+		<ign>8.3</ign>
+		<sales>2700000</sales>
+		<genre>Third person shooter</genre>
+		<platform>Nintendo Switch</platform>
+		<img>./imgs/10.jpg</img>
+	</game>
+</gamesList>
+
+
+
+
+
+
+
+
+
+
+
+
+
