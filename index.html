@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="index.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+
+	$(document).ready(function(){
+		$(".navbar-element").hover(
+
+			function(){
+				$(this).css({
+					"color": "#3385ff"
+				});
+			},
+
+			function(){
+				$(this).css({
+					"color": "#737373"
+				});
+			}
+		);
+	});
+
+	$(document).ready(function(){
+		$(".sort-bar-element").hover(
+			function(){
+				$(this).css({
+					"color": "#3385ff"
+				});
+			},
+
+			function(){
+				$(this).css({
+					"color": "#262626"
+				});
+			}
+		);
+	});
+
+
+
+</script>
+</head>
+
+<body onload = 'loadGameList()'>
+	<div id = 'navbar'>
+		<ul>
+			<li class = 'navbar-element font-style-1'>All</li>
+			<li class = 'navbar-element font-style-1'>PS4</li>
+			<li class = 'navbar-element font-style-1'>XBOX One</li>
+			<li class = 'navbar-element font-style-1'>nintendo switch</li>
+			<li class = 'navbar-element font-style-1'>3DS</li>
+			<li class = 'navbar-element font-style-1'>PSV</li>
+		</ul>
+	</div>
+
+
+	<div id = 'display-pane'>
+		<div id = 'sort-bar'>
+
+			<a href = '#' class = 'sort-bar-element font-style-2' onclick = "onClickSales()">
+				<span id = 'sort-title-sales' class = 'active'>Sales</span>
+				<span id = 'sortMethod-0' class = 'asend-symbol active'>&#9662;</span>
+				<span id = 'sortMethod-1' class = 'descend-symbol'>&#9662;</span>
+			</a>
+
+			<a href = '#' class = 'sort-bar-element font-style-2' onclick = "onClickRate()">
+				<span id = 'sort-title-rate'>Rate</span>
+				<span id = 'sortMethod-2' class = 'asend-symbol'>&#9662;</span>
+				<span id = 'sortMethod-3' class = 'descend-symbol'>&#9662;</span>
+			</a>
+
+			<a href = '#' class = 'sort-bar-element font-style-2' onclick = "onClickTime()">
+				<span id = 'sort-title-time'>Time</span>
+				<span id = 'sortMethod-4' class = 'asend-symbol'>&#9662;</span>
+				<span id = 'sortMethod-5' class = 'descend-symbol'>&#9662;</span>
+			</a>
+
+		</div>
+	</div>
+
+	<div id = 'filter-pane'>
+		<p>Filter</p>
+		<table>
+			<tr id = 'filter-time'>
+				<th class = 'category-title font-style-3'>Time</th>
+				<td>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>All</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2017</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2016</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2015</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2014</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2013</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2012</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2011</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2010</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2009</a>
+					<a href = '#' class = 'font-style-4' onclick = 'onYearChange(this)'>2008</a>
+				</td>
+			</tr>
+
+			<tr id = 'filter-developer'>
+				<th class = 'category-title font-style-3'>developer</th>
+				<td>
+					
+				</td>
+			</tr>
+
+			<tr id = 'filter-genre'>
+				<th class = 'category-title font-style-3'>Genre</th>
+				<td>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>All</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Action</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Adventure</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Thrid Person Shooter</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>First Person Shotter</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Role Playing</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Racing</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Fighting</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Sports</a>
+					<a href = '#' class = 'font-style-4' onclick= 'onGenreChange(this)'>Strategy</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div id = 'game-list'>
+		
+	</div>
+
+	<div id = 'pagination'>
+		
+	</div>
+
+	<script>
+		var gamesToDisplay;
+		var sortMethod = 0;
+		var selectedYear = 'all';
+		var selectedGenre = 'all';
+		var currentPage = 1;
+
+		const MAX_NUMBER_PER_PAGE = 9;
+
+		function loadGameList(){
+			
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if (this.readyState == 4 && this.status == 200){
+					gamesToDisplay = this.responseXML.getElementsByTagName("game");
+					gamesToDisplay = filterGamesList();
+					gamesToDisplay = sortGamesList();
+					displayGameList();
+				}
+			};
+
+			xhttp.open('GET', "./games.xml", true);
+			xhttp.send();
+		}
+
+
+		function filterGamesList(){
+			var gamesArray = [];
+			var i;
+
+			for (i = 0; i < gamesToDisplay.length; i++){
+				var thisYear = gamesToDisplay[i].getElementsByTagName('year')[0].childNodes[0].nodeValue.toLowerCase();
+				var thisGenre = gamesToDisplay[i].getElementsByTagName('genre')[0].childNodes[0].nodeValue.toLowerCase();
+
+				if ((thisYear == selectedYear || selectedYear == 'all') && (thisGenre == selectedGenre || selectedGenre == 'all')){
+
+					gamesArray.push(gamesToDisplay[i]);
+				}
+			}
+			return gamesArray;
+		}
+
+		function sortGamesList(){
+
+			var gamesArray = [];
+			var i;
+			for (i = 0; i < gamesToDisplay.length; i++){
+				gamesArray.push(gamesToDisplay[i]);
+			}
+
+
+			/* sort by sales (asending)*/
+			if (sortMethod == 0){
+				gamesArray.sort(
+					function(a, b){
+						var aSales = Number(a.getElementsByTagName('sales')[0].childNodes[0].nodeValue);
+						var bSales = Number(b.getElementsByTagName('sales')[0].childNodes[0].nodeValue);
+
+						if (aSales < bSales){
+							return -1;
+						}else{
+							return 1;
+						}
+					}
+				);
+			}
+
+			/* sort by sales (descending)*/
+			if (sortMethod == 1){
+				gamesArray.sort(
+					function(a, b){
+						var aSales = Number(a.getElementsByTagName('sales')[0].childNodes[0].nodeValue);
+						var bSales = Number(b.getElementsByTagName('sales')[0].childNodes[0].nodeValue);
+
+						if (aSales < bSales){
+							return 1;
+						}else{
+							return -1;
+						}
+					}
+				);
+			}
+
+
+			/* sort by ign rate (ascending)*/
+			if (sortMethod == 2){
+				gamesArray.sort(
+					function(a, b){
+						var aRate = Number(a.getElementsByTagName('ign')[0].childNodes[0].nodeValue);
+						var bRate = Number(b.getElementsByTagName('ign')[0].childNodes[0].nodeValue);
+
+						if (aRate < bRate){
+							return -1;
+						}else{
+							return 1;
+						}
+					}
+				);
+			}
+
+			/* sort by ign rate (descending)*/
+			if (sortMethod == 3){
+				gamesArray.sort(
+					function(a, b){
+						var aRate = Number(a.getElementsByTagName('ign')[0].childNodes[0].nodeValue);
+						var bRate = Number(b.getElementsByTagName('ign')[0].childNodes[0].nodeValue);
+
+						if (aRate < bRate){
+							return 1;
+						}else{
+							return -1;
+						}
+					}
+				);
+			}
+
+
+			/* sort by Time (asending)*/
+			if (sortMethod == 4){
+				gamesArray.sort(
+					function(a, b){
+						/*compare year at first*/
+						var aYear = Number(a.getElementsByTagName('year')[0].childNodes[0].nodeValue);
+						var bYear = Number(b.getElementsByTagName('year')[0].childNodes[0].nodeValue);
+						if (aYear < bYear){
+							return -1;
+						}else if(aYear > bYear){
+							return 1;
+						}
+
+						/*compare month when years are the same*/
+
+						var aMonth = Number(a.getElementsByTagName('month')[0].childNodes[0].nodeValue);
+						var bMonth = Number(b.getElementsByTagName('month')[0].childNodes[0].nodeValue);
+						if (aMonth < bMonth){
+							return -1;
+						}else if(aMonth > bMonth){
+							return 1;
+						}
+
+
+						/*compare day when month are the same*/
+						var aDay = Number(a.getElementsByTagName('day')[0].childNodes[0].nodeValue);
+						var bDay = Number(b.getElementsByTagName('day')[0].childNodes[0].nodeValue);
+						if (aDay < bDay){
+						
+							return -1;
+						}else{
+							
+							return 1;
+						}
+					}
+				);
+			}
+
+			/* sort by Time (descending)*/
+			if (sortMethod == 5){
+				gamesArray.sort(
+					function(a, b){
+						/*compare year at first*/
+						var aYear = Number(a.getElementsByTagName('year')[0].childNodes[0].nodeValue);
+						var bYear = Number(b.getElementsByTagName('year')[0].childNodes[0].nodeValue);
+						if (aYear < bYear){
+							return 1;
+						}else if(aYear > bYear){
+							return -1;
+						}
+
+						/*compare month when years are the same*/
+						var aMonth = Number(a.getElementsByTagName('month')[0].childNodes[0].nodeValue);
+						var bMonth = Number(b.getElementsByTagName('month')[0].childNodes[0].nodeValue);
+						if (aMonth < bMonth){
+							return 1;
+						}else if(aMonth > bMonth){
+							return -1;
+						}
+
+						/*compare day when month are the same*/
+						var aDay = Number(a.getElementsByTagName('day')[0].childNodes[0].nodeValue);
+						var bDay = Number(b.getElementsByTagName('day')[0].childNodes[0].nodeValue);
+						if (aDay < bDay){
+							return 1;
+						}else{
+							return -1;
+						}
+					}
+				);
+			}
+
+			return gamesArray;
+
+		}
+
+		function displayGameList(){
+			var text = '';
+
+			var totalPages = Math.ceil(gamesToDisplay.length / MAX_NUMBER_PER_PAGE);
+
+			var startIndex = (currentPage - 1) * MAX_NUMBER_PER_PAGE;
+			var endIndex;
+			if (startIndex + MAX_NUMBER_PER_PAGE > gamesToDisplay.length - 1){
+				endIndex = gamesToDisplay.length;
+			}else{
+				endIndex = startIndex + MAX_NUMBER_PER_PAGE;
+			}
+
+			for (i = startIndex; i < endIndex; i++){
+				var currentGame = gamesToDisplay[i];
+				var currentGameName = currentGame.getElementsByTagName('name')[0].childNodes[0].nodeValue;
+				var imgtText = "<img src = '" +currentGame.getElementsByTagName('img')[0].childNodes[0].nodeValue+ "' />";
+				var nameText = "<p class = 'font-style-4'>" +currentGameName+ "</p>"
+				text += "<div class = 'game'>" + imgtText + nameText + '</div>';
+			}
+
+			document.getElementById('game-list').innerHTML = text;
+	
+			createPagination(totalPages);
+		}
+
+		function createPagination(totalPages){
+			var text = '';
+			var i;
+			for (i = 0; i < totalPages; i++){
+		
+				var pageNumber = i + 1;
+
+				if (pageNumber == currentPage){
+					text += "<a href = '#' onclick = 'changePage(this)' class = 'active'>" + pageNumber + "</a>";
+				}else{
+					text += "<a href = '#' onclick = 'changePage(this)'>" + pageNumber + "</a>";
+				}
+			}
+			if(currentPage < totalPages){
+				text += "<a href = '#' onclick = 'changePage(this)'>Next</a>";
+			}
+			document.getElementById('pagination').innerHTML = text;
+		}
+
+		function changePage(page){
+			if (page.innerHTML == 'Next'){
+				currentPage += 1;
+			}else{
+				currentPage = Number(page.innerHTML);
+			}
+
+			displayGameList();
+		}
+
+
+		function onClickSales(){
+
+			currentPage = 1;
+			var activedElements = document.getElementById('sort-bar').getElementsByClassName('active');
+
+			while(activedElements.length > 0){
+				activedElements[0].classList.remove('active');
+			}
+
+			document.getElementById('sort-title-sales').classList.add('active');
+			if (sortMethod == 0){
+				sortMethod = 1;
+				document.getElementById('sortMethod-1').classList.add('active');
+				loadGameList();
+			}else{
+				sortMethod = 0;
+				document.getElementById('sortMethod-0').classList.add('active');
+				loadGameList();
+			}
+
+		}
+
+		function onClickRate(){
+
+			currentPage = 1;
+			var activedElements = document.getElementById('sort-bar').getElementsByClassName('active');
+			while(activedElements.length > 0){
+				activedElements[0].classList.remove('active');
+			}
+
+			document.getElementById('sort-title-rate').classList.add('active');
+			if (sortMethod == 2){
+				sortMethod = 3;
+				document.getElementById('sortMethod-3').classList.add('active');
+				loadGameList();
+			}else{
+				sortMethod = 2;
+				document.getElementById('sortMethod-2').classList.add('active');
+				loadGameList();
+			}
+		}
+
+		function onClickTime(){
+
+			currentPage = 1;
+			var activedElements = document.getElementById('sort-bar').getElementsByClassName('active');
+			while(activedElements.length > 0){
+				activedElements[0].classList.remove('active');
+			}
+
+			document.getElementById('sort-title-time').classList.add('active');
+			if (sortMethod == 4){
+				sortMethod = 5;
+				document.getElementById('sortMethod-5').classList.add('active');
+				loadGameList();
+			}else{
+				sortMethod = 4;
+				document.getElementById('sortMethod-4').classList.add('active');
+				loadGameList();
+			}
+		}
+
+		function onYearChange(year){
+			selectedYear = year.innerHTML.toLowerCase();
+			loadGameList();
+		}
+
+		function onGenreChange(genre){
+			selectedGenre = genre.innerHTML.toLowerCase();
+			loadGameList();
+		}
+
+
+	</script>
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
